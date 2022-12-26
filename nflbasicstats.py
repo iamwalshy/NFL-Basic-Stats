@@ -2,16 +2,15 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the data into a Pandas DataFrame
-df = pd.read_csv('Basic_Stats.csv')
+# Load the data on the winners and losers of Superbowl finals
+df = pd.read_csv("superbowl_winners_losers.csv")
 
-# Group the data by team and sum the touchdowns column
-df_grouped = df.groupby('team').sum()['touchdowns']
+# Create a bar plot of the number of wins and losses for each team
+plt.bar(df["Team"], df["Wins"], label="Wins")
+plt.bar(df["Team"], df["Losses"], bottom=df["Wins"], label="Losses")
+plt.legend()
+plt.xlabel("Team")
+plt.ylabel("Number of Wins and Losses")
 
-# Create the bar chart
-plt.bar(df_grouped.index, df_grouped.values)
-plt.xlabel('Team')
-plt.ylabel('Touchdowns')
-
-# Display the bar chart using Streamlit's st.pyplot function
+# Display the bar plot in the Streamlit web page
 st.pyplot()
