@@ -1,16 +1,14 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
+import tweepy
 
-# Load the data on the winners and losers of Superbowl finals
-df = pd.read_csv("superbowl_winners_losers.csv")
+# Set up the Twitter API using your API keys
+auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
+api = tweepy.API(auth)
 
-# Create a bar plot of the number of wins and losses for each team
-plt.bar(df["Team"], df["Wins"], label="Wins")
-plt.bar(df["Team"], df["Losses"], bottom=df["Wins"], label="Losses")
-plt.legend()
-plt.xlabel("Team")
-plt.ylabel("Number of Wins and Losses")
+# Search for tweets with the hashtag #chatgpt
+tweets = api.search_tweets(q="#chatgpt", lang="en", count=100)
 
-# Display the bar plot in the Streamlit web page
-st.pyplot()
+st.title("#chatgpt Tweets")
+
+# Display the tweets using Streamlit's dataframe function
+st.dataframe(tweets)
